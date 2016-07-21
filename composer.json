@@ -1,0 +1,21 @@
+{
+    "name": "stelsoft/simple-jq-ajax-submit",
+    "description": "Submit forms via ajax with jQuery",
+    "type": "component",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Michał Stelmak",
+            "email": "michal@stelmak.pl"
+        }
+    ],
+    "extra": {
+        "component": {
+            "scripts": [
+                "simpleAjaxSubmit.js"
+            ],
+            "files": [
+            ]
+        }
+    }
+}
