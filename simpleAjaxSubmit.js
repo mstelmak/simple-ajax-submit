@@ -2,7 +2,8 @@ $.fn.simpleAjaxSubmit = function(options){
 
     //setup options
     var defaults = {
-        action: null
+        action: null,
+        parent_selector: null
     },
         opts = $.extend(defaults, options);
 
@@ -86,7 +87,7 @@ $.fn.simpleAjaxSubmit = function(options){
             var first_element = null;
             for(var element_name in errors){
                 var el = form.find('[name='+element_name+']'),
-                    parent = el.closest('.parent-tag'),
+                    parent = opts.parent_selector ? el.closest(opts.parent_selector) : el.parent(),
                     error_container = parent.find('.errors'),
                     msg_key = Object.keys(errors[element_name])[0],
                     msg = errors[element_name][msg_key];
