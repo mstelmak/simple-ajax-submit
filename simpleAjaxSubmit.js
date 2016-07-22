@@ -1,70 +1,77 @@
-$.fn.simpleAjaxSubmit = function(){
+$.fn.simpleAjaxSubmit = function(options){
 
-    $.each(this, function(){
+    //seup options
+    var defaults = {
+        url: null
+    },
+        opts = $.extend(defaults, options);
 
-        $(this).on('submit', function(e){
-            e.preventDefault();
-            var form = $(this),
-                button = form.find('[type=submit]'),
-                data = form.serialize();
+    //bind main submit event
+    $('body').on('submit', this.selector, function(e){
+        e.preventDefault();
+        
+        var form = $(this),
+            button = form.find('[type=submit]'),
+            data = form.serialize(),
+            action = opts.url ? opts.url : form.attr('action');
 
-            button.attr('disabled', 'disabled');
-            helpers.clearErrors(form);
+        button.attr('disabled', 'disabled');
+        helpers.clearErrors(form);
 
-            $.post(wp_vars.ajax_url, data, function(resp){
-                //swap csrf key with fresh one
-                if(resp.csrf){
-                    form.find('[name="csrf"]').val(resp.csrf);
+        $.post(action, data, function(resp){
+            //swap csrf key with fresh one
+            if(resp.csrf){
+                form.find('[name="csrf"]').val(resp.csrf);
+            }
+
+            //if custom callback specified
+            var callback = form.data('callback');
+            if(callback){
+                if(!callback.apply(this, arguments)){
+                    return;
                 }
+            }
 
-                //if custom callback specified
-                var callback = form.data('callback');
-                if(callback){
-                    if(!callback.apply(this, arguments)){
-                        return;
-                    }
-                }
+            button.removeAttr('disabled');
 
-                button.removeAttr('disabled');
-
-                //do status specific actions
-                if(resp.status == 'invalid' && resp.data){
-                    helpers.appendErrors(form, resp.data);
-                    helpers.setCorrectClasses(form);
-                }
-                if(resp.status == 'error'){
-                    if(!resp.alert_msg){
-                        swal({
-                            title: "",
-                            text: 'Unknown error occurred',
-                            type: 'error'
-                        });
-                    }
-                }
-                if(resp.status == 'success'){}
-
-                //show message if passed
-                if(resp.alert_msg){
+            //do status specific actions
+            if(resp.status == 'invalid' && resp.data){
+                helpers.appendErrors(form, resp.data);
+                helpers.setCorrectClasses(form);
+            }
+            if(resp.status == 'error'){
+                if(!resp.alert_msg){
                     swal({
                         title: "",
-                        text: resp.alert_msg,
-                        type: resp.status == 'invalid' ? 'warning' : resp.status
-                    }, function(){
-                        if(resp.redirect){
-                            window.location = resp.redirect;
-                        }
+                        text: 'Unknown error occurred',
+                        type: 'error'
                     });
                 }
-                else{
+            }
+            if(resp.status == 'success'){}
+
+            //show message if passed
+            if(resp.alert_msg){
+                swal({
+                    title: "",
+                    text: resp.alert_msg,
+                    type: resp.status == 'invalid' ? 'warning' : resp.status
+                }, function(){
                     if(resp.redirect){
                         window.location = resp.redirect;
                     }
+                });
+            }
+            else{
+                if(resp.redirect){
+                    window.location = resp.redirect;
                 }
-            }, 'json');
-        });
-
+            }
+        }, 'json');
     });
 
+
+    //define helpers
     var helpers = {
         setCorrectClasses: function(form){
             var valid_elements = form.find('input[type=text], input[type=password], select, textarea').closest('.parent-tag').not('.invalid');
