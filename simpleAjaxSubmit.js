@@ -1,8 +1,8 @@
 $.fn.simpleAjaxSubmit = function(options){
 
-    //seup options
+    //setup options
     var defaults = {
-        url: null
+        action: null
     },
         opts = $.extend(defaults, options);
 
@@ -13,7 +13,7 @@ $.fn.simpleAjaxSubmit = function(options){
         var form = $(this),
             button = form.find('[type=submit]'),
             data = form.serialize(),
-            action = opts.url ? opts.url : form.attr('action');
+            action = opts.action ? opts.action : form.attr('action');
 
         button.attr('disabled', 'disabled');
         helpers.clearErrors(form);
