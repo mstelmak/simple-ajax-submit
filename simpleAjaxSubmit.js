@@ -3,7 +3,8 @@ $.fn.simpleAjaxSubmit = function(options){
     //setup options
     var defaults = {
         action: null,
-        parent_selector: null
+        parent_selector: null,
+        scroll_top_offset_selector: null
     },
         opts = $.extend(defaults, options);
 
@@ -105,7 +106,10 @@ $.fn.simpleAjaxSubmit = function(options){
                 error_container.text(msg);
             }
 
-            first_element.focus();
+            var more_offset = opts.scroll_top_offset_selector != null ? $(opts.scroll_top_offset_selector).height() : 0;
+            $('body,html').animate({scrollTop: first_element.offset().top - more_offset - 20}, function(){
+                first_element.focus();
+            });
         }
     };
 };
