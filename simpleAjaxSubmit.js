@@ -52,6 +52,15 @@ $.fn.simpleAjaxSubmit = function(options){
             }
             if(resp.status == 'success'){}
 
+            //clear the form if specified
+            if(resp.clear_form){
+                var reset = $('<input />', {type: 'reset'});
+                reset.hide();
+                form.append(reset);
+                reset.click();
+                reset.remove();
+            }
+
             //show message if passed
             if(resp.alert_msg){
                 swal({
