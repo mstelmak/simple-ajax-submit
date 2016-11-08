@@ -116,7 +116,13 @@
                     error_container.text(msg);
                 }
 
-                var more_offset = opts.scroll_top_offset_selector != null ? $(opts.scroll_top_offset_selector).height() : 0;
+                //scroll to invalid element
+                var more_offset = 0;
+                if(opts.scroll_top_offset_selector != null){
+                    $(opts.scroll_top_offset_selector).each(function(){
+                        more_offset += $(this).height();
+                    });
+                }
                 $('body,html').animate({scrollTop: first_element.offset().top - more_offset - 20}, function(){
                     first_element.focus();
                 });
