@@ -19,6 +19,7 @@
                 action = opts.action ? opts.action : form.attr('action');
 
             button.attr('disabled', 'disabled');
+            button.addClass('running');
             helpers.clearErrors(form);
 
             $.post(action, data, function(resp){
@@ -36,6 +37,7 @@
                 }
 
                 button.removeAttr('disabled');
+                button.removeClass('running');
 
                 //do status specific actions
                 if(resp.status == 'invalid' && resp.data){
