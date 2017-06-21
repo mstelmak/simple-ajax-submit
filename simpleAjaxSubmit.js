@@ -122,7 +122,7 @@
                 var more_offset = 0;
                 if(opts.scroll_top_offset_selector != null){
                     $(opts.scroll_top_offset_selector).each(function(){
-                        more_offset += $(this).height();
+                        more_offset += $(this).outerHeight();
                     });
                 }
                 $('body,html').animate({scrollTop: first_element.offset().top - more_offset - 20}, function(){
