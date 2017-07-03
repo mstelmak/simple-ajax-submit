@@ -47,11 +47,16 @@
                 }
                 if(resp.status == 'error'){
                     if(!resp.alert_msg){
-                        swal({
-                            title: "",
-                            text: 'Unknown error occurred',
-                            type: 'error'
-                        });
+                        if(typeof swal !== 'undefined'){
+                            swal({
+                                title: "",
+                                text: 'Unknown error occurred',
+                                type: 'error'
+                            });
+                        }
+                        else{
+                            console.error('Unknown error occurred');
+                        }
                     }
                 }
                 if(resp.status == 'success'){}
