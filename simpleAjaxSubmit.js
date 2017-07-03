@@ -5,7 +5,8 @@
         var defaults = {
                 action: null,
                 parent_selector: null,
-                scroll_top_offset_selector: null
+                scroll_top_offset_selector: null,
+                csrf_token_field_name: 'csrf'
             },
             opts = $.extend(defaults, options);
 
@@ -13,7 +14,7 @@
         $('body').on('submit', this.selector, function(e){
             e.preventDefault();
 
-            var form = $(this),
+            var form = $(e.target),
                 button = form.find('[type=submit]'),
                 data = form.serialize(),
                 action = opts.action ? opts.action : form.attr('action');
@@ -24,8 +25,8 @@
 
             $.post(action, data, function(resp){
                 //swap csrf key with fresh one
-                if(resp.csrf){
-                    form.find('[name="csrf"]').val(resp.csrf);
+                if(resp[opts.csrf_token_field_name]){
+                    form.find('[name="'+opts.csrf_token_field_name+'"]').val(resp[opts.csrf_token_field_name]);
                 }
 
                 //if custom callback specified
@@ -131,4 +132,4 @@
             }
         };
     };
-})(jQuery);
+})(typeof jQuery !== 'undefined' ? jQuery : $);
