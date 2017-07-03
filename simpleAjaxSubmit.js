@@ -1,5 +1,5 @@
 (function ($) {
-    $.fn.simpleAjaxSubmit = function(options){
+    $.fn.simpleAjaxSubmit = function(selector, options){
 
         //setup options
         var defaults = {
@@ -11,7 +11,7 @@
             opts = $.extend(defaults, options);
 
         //bind main submit event
-        $('body').on('submit', this.selector, function(e){
+        this.on('submit', function(e){
             e.preventDefault();
 
             var form = $(e.target),
