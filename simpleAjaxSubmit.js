@@ -75,7 +75,8 @@
                     swal({
                         title: "",
                         text: resp.alert_msg,
-                        type: resp.status == 'invalid' ? 'warning' : resp.status
+                        type: resp.status == 'invalid' ? 'warning' : resp.status,
+                        html: true
                     }, function(){
                         if(resp.redirect){
                             window.location = resp.redirect;
