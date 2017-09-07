@@ -8,7 +8,7 @@
                 scroll_top_offset_selector: null,
                 csrf_token_field_name: 'csrf'
             },
-            opts = $.extend(defaults, options);
+            opts = $.extend(defaults, options || selector);
 
         //bind main submit event
         this.on('submit', function(e){
