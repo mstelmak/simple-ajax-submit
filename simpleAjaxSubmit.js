@@ -19,6 +19,10 @@
                 data = form.serialize(),
                 action = opts.action ? opts.action : form.attr('action');
 
+            if(button.attr('disabled')){
+                return;
+            }
+
             button.attr('disabled', 'disabled');
             button.addClass('running');
             helpers.clearErrors(form);
