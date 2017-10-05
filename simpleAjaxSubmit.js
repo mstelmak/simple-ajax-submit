@@ -85,11 +85,17 @@
                         if(resp.redirect){
                             window.location = resp.redirect;
                         }
+                        if(resp.reload){
+                            window.location = window.location.href;
+                        }
                     });
                 }
                 else{
                     if(resp.redirect){
                         window.location = resp.redirect;
+                    }
+                    if(resp.reload){
+                        window.location = window.location.href;
                     }
                 }
             }, 'json');
