@@ -143,6 +143,9 @@
                         more_offset += $(this).outerHeight();
                     });
                 }
+                if(opts.scroll_top_offset){
+                    more_offset += opts.scroll_top_offset;
+                }
                 $('body,html').animate({scrollTop: first_element.offset().top - more_offset - 20}, function(){
                     first_element.focus();
                 });
