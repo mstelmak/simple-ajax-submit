@@ -121,6 +121,7 @@
                         error_container = parent.find('.errors'),
                         msg_key = Object.keys(errors[element_name])[0],
                         msg = errors[element_name][msg_key];
+                    parent = parent.length?parent:el.parent();
 
                     if(first_element == null){
                         first_element = el;
