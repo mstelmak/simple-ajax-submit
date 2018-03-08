@@ -65,6 +65,13 @@
                 }
                 if(resp.status == 'success'){}
 
+                var callback = form.data('sas-shutdown');
+                if(callback){
+                    if(!callback.apply(this, arguments)){
+                        return;
+                    }
+                }
+
                 //clear the form if specified
                 if(resp.clear_form){
                     var reset = $('<input />', {type: 'reset'});
