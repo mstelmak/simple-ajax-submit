@@ -116,7 +116,7 @@
             appendErrors: function(form, errors){
                 var first_element = null;
                 for(var element_name in errors){
-                    var el = form.find('[name='+element_name+']'),
+                    var el = form.find('[name="'+element_name+'"]'),
                         parent = opts.parent_selector ? el.closest(opts.parent_selector) : el.parent(),
                         error_container = parent.find('.errors'),
                         msg_key = Object.keys(errors[element_name])[0],
